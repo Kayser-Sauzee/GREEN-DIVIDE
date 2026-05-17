@@ -19,107 +19,6 @@
             padding: 0;
             margin: 0;
         }
-
-        /* ── Géolocalisation : point bleu pulsant + flèche ── */
-        .geoloc-wrapper {
-            position: relative;
-            width: 0;
-            height: 0;
-            /* Le wrapper est centré sur la coordonnée GPS */
-        }
-
-        /* Halo pulsant externe */
-        .geoloc-pulse {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(30, 136, 229, 0.25);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 2s ease-out infinite;
-            pointer-events: none;
-        }
-
-        /* Deuxième halo décalé pour effet double pulse */
-        .geoloc-pulse2 {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(30, 136, 229, 0.15);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 2s ease-out infinite 0.7s;
-            pointer-events: none;
-        }
-
-        @keyframes pulse {
-            0%   { width: 20px; height: 20px; opacity: 0.8; }
-            100% { width: 60px; height: 60px; opacity: 0; }
-        }
-
-        /* Point bleu central */
-        .geoloc-dot {
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #1E88E5;
-            border: 3px solid #fff;
-            box-shadow: 0 0 0 2px rgba(30,136,229,0.5), 0 2px 8px rgba(0,0,0,0.4);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        /* Conteneur de la flèche — tourne autour du centre du point */
-        .geoloc-arrow-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            transform-origin: 0 0;
-            /* la rotation est appliquée via JS */
-            pointer-events: none;
-            transition: transform 0.4s ease;
-        }
-
-        /* La flèche elle-même, positionnée au-dessus du point */
-        .geoloc-arrow {
-            position: absolute;
-            width: 0;
-            height: 0;
-            /* Triangle SVG-like avec border */
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 16px solid #1E88E5;
-            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
-            /* Centre horizontal, décalé vers le haut (au-delà du rayon du point) */
-            left: -7px;
-            top: -30px;
-        }
-        /* Pointe blanche sur la flèche */
-        .geoloc-arrow::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 10px solid #fff;
-            left: -4px;
-            top: 6px;
-        }
-
-        /* Masquée par défaut, affichée quand le cap est connu */
-        .geoloc-arrow-container.hidden {
-            display: none;
-        }
         </style>
         <title>PERIPLE GREEN DIVIDE DE BÂTARD</title>
     </head>
@@ -203,6 +102,7 @@
                     video.style.maxWidth = "60vw";
                     imgTd.parentNode.replaceChild(video, imgTd);
                     popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
                     video.addEventListener('loadedmetadata', function() {
                         popup.update();
                     });
@@ -245,150 +145,13 @@
             abstract.show = function () {
                 this._div.classList.remove("abstract");
                 this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = 'Etape 1 : Gare de BUSSUM → SOESTERBERG (46 km) Circuit GPX 1 « 1_Utrecht Cyclisme 130,39 km - avr. 09 » Du km28 au km73 puis environ 1 km jusqu'à l'hôtel<br /><br />Etape 2 : SOESTERBERG → LOENEN (102.5 km) 1 km de l'hôtel Kontakt der Kontinenten jusqu'au parcours Circuit GPX1 « 1_Utrecht Cyclisme 130,39 km - avr. 09 » Du km 73 au km130 (57 km) Circuit GPX2 « 2_Renkum Cyclisme 102,71 km - avr. 09 » Du km0 au km43.5 + 1 km jusqu'à l'hôtel (44.5 km)<br /><br />Etape 3 : LOENEN → VIERHOUTEN (90.5 km) 1 km de l'hôtel RESTAURANT de LOENERMARK Circuit GPX2 « 2_Renkum Cyclisme 102,71 km - avr. 09 » Du km 43.5 au km 103 (59.5 km) Circuit GPX3 « 3_Ermelo Cyclisme 97,5 km - avr. 09 » Du km0 au km26 (26 km) 4 km du km26 à l'hôtel<br /><br />Etape 4 : VIERHOUTEN → ZWOLLE (76 km) 4 km de l'hôtel Fletcher au parcours (km26 du GPX3) Circuit GPX3 « 3_Ermelo Cyclisme 97,5 km - avr. 09 » Du km26 au km98 (72 km)';
+                this._div.innerHTML = 'Etape 1 : Gare de BUSSUM → SOESTERBERG (46 km) Circuit GPX 1 « 1_Utrecht Cyclisme 130,39 km - avr. 09 » Du km28 au km73 puis environ 1 km jusqu’à l’hôtel<br /><br />Etape 2 : SOESTERBERG → LOENEN (102.5 km) 1 km de l’hôtel Kontakt der Kontinenten jusqu’au parcours Circuit GPX1 « 1_Utrecht Cyclisme 130,39 km - avr. 09 » Du km 73 au km130 (57 km) Circuit GPX2 « 2_Renkum Cyclisme 102,71 km - avr. 09 » Du km0 au km43.5 + 1 km jusqu’à l’hôtel (44.5 km)<br /><br />Etape 3 : LOENEN → VIERHOUTEN (90.5 km) 1 km de l’hôtel RESTAURANT de LOENERMARK Circuit GPX2 « 2_Renkum Cyclisme 102,71 km - avr. 09 » Du km 43.5 au km 103 (59.5 km) Circuit GPX3 « 3_Ermelo Cyclisme 97,5 km - avr. 09 » Du km0 au km26 (26 km) 4 km du km26 à l’hôtel<br /><br />Etape 4 : VIERHOUTEN → ZWOLLE (76 km) 4 km de l’hôtel Fletcher au parcours (km26 du GPX3) Circuit GPX3 « 3_Ermelo Cyclisme 97,5 km - avr. 09 » Du km26 au km98 (72 km)';
         };
         abstract.addTo(map);
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
-
-        // ════════════════════════════════════════════════════════
-        // GÉOLOCALISATION PERSONNALISÉE — point bleu pulsant + flèche
-        // ════════════════════════════════════════════════════════
-
-        // Construction du HTML du marker
-        var geolocHTML = [
-            '<div class="geoloc-wrapper">',
-            '  <div class="geoloc-pulse"></div>',
-            '  <div class="geoloc-pulse2"></div>',
-            '  <div class="geoloc-arrow-container hidden" id="geoloc-arrow-el">',
-            '    <div class="geoloc-arrow"></div>',
-            '  </div>',
-            '  <div class="geoloc-dot"></div>',
-            '</div>'
-        ].join('');
-
-        var geolocIcon = L.divIcon({
-            html: geolocHTML,
-            className: '',   // pas de style Leaflet par défaut
-            iconSize: [0, 0],
-            iconAnchor: [0, 0]
-        });
-
-        var geolocMarker = null;
-        var lastLat = null, lastLng = null;
-        var watchId = null;
-
-        // Calcul du cap entre deux points (en degrés, 0 = Nord)
-        function computeBearing(lat1, lng1, lat2, lng2) {
-            var dLng = (lng2 - lng1) * Math.PI / 180;
-            var rlat1 = lat1 * Math.PI / 180;
-            var rlat2 = lat2 * Math.PI / 180;
-            var y = Math.sin(dLng) * Math.cos(rlat2);
-            var x = Math.cos(rlat1) * Math.sin(rlat2) -
-                    Math.sin(rlat1) * Math.cos(rlat2) * Math.cos(dLng);
-            var brng = Math.atan2(y, x) * 180 / Math.PI;
-            return (brng + 360) % 360;
-        }
-
-        function onGeolocSuccess(pos) {
-            var lat = pos.coords.latitude;
-            var lng = pos.coords.longitude;
-            var heading = pos.coords.heading; // null si non disponible
-
-            // Crée le marker au premier fix
-            if (!geolocMarker) {
-                geolocMarker = L.marker([lat, lng], {
-                    icon: geolocIcon,
-                    zIndexOffset: 1000,
-                    interactive: false
-                }).addTo(map);
-            } else {
-                // Mise à jour fluide : setLatLng est sans transition native,
-                // mais Leaflet repositionne via CSS transform → très fluide
-                geolocMarker.setLatLng([lat, lng]);
-            }
-
-            // Calcul du cap
-            var bearing = null;
-            if (heading !== null && !isNaN(heading)) {
-                // Le GPS fournit directement le cap
-                bearing = heading;
-            } else if (lastLat !== null) {
-                // Estimation depuis les deux dernières positions
-                var dist = map.distance([lastLat, lastLng], [lat, lng]);
-                if (dist > 3) { // seuil minimal pour éviter le bruit
-                    bearing = computeBearing(lastLat, lastLng, lat, lng);
-                }
-            }
-
-            // Met à jour la flèche
-            var arrowEl = document.getElementById('geoloc-arrow-el');
-            if (arrowEl) {
-                if (bearing !== null) {
-                    arrowEl.classList.remove('hidden');
-                    arrowEl.style.transform = 'rotate(' + bearing + 'deg)';
-                } else {
-                    arrowEl.classList.add('hidden');
-                }
-            }
-
-            lastLat = lat;
-            lastLng = lng;
-        }
-
-        function onGeolocError(err) {
-            console.warn('Géolocalisation indisponible :', err.message);
-        }
-
-        // Bouton de géolocalisation dans le coin haut-gauche
-        var geolocBtn = L.Control.extend({
-            options: { position: 'topleft' },
-            onAdd: function(map) {
-                var btn = L.DomUtil.create('button', 'leaflet-bar leaflet-control');
-                btn.innerHTML = '⊕';
-                btn.title = 'Me localiser';
-                btn.style.cssText = [
-                    'width:34px', 'height:34px', 'font-size:20px',
-                    'cursor:pointer', 'background:#fff', 'border:none',
-                    'display:flex', 'align-items:center', 'justify-content:center',
-                    'box-shadow:0 1px 5px rgba(0,0,0,0.4)'
-                ].join(';');
-                btn.onclick = function(e) {
-                    L.DomEvent.stopPropagation(e);
-                    if (watchId === null) {
-                        // Démarre le suivi
-                        watchId = navigator.geolocation.watchPosition(
-                            onGeolocSuccess,
-                            onGeolocError,
-                            {
-                                enableHighAccuracy: true,
-                                maximumAge: 1000,
-                                timeout: 10000
-                            }
-                        );
-                        btn.style.color = '#1E88E5';
-                        btn.innerHTML = '⊙';
-                    } else {
-                        // Arrête le suivi
-                        navigator.geolocation.clearWatch(watchId);
-                        watchId = null;
-                        if (geolocMarker) {
-                            map.removeLayer(geolocMarker);
-                            geolocMarker = null;
-                        }
-                        lastLat = null; lastLng = null;
-                        btn.style.color = '';
-                        btn.innerHTML = '⊕';
-                    }
-                };
-                return btn;
-            }
-        });
-        new geolocBtn().addTo(map);
-
-        // ════════════════════════════════════════════════════════
-
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
@@ -1340,6 +1103,12 @@
             {label: "Google Road", layer: layer_GoogleRoad_1},
             {label: "Waze (World)", layer: layer_WazeWorld_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
             collapsed: true,
         });
         lay.addTo(map);
